@@ -7,18 +7,19 @@
 
 
 
-<curvedBottomNavigation :options="options" v-model="selected" 
-  value="1"
-   foreground-color='#38726C'
-  badge-color='#C33124'
-  background-color='#9BC1BC'
-  icon-color='#000000'
+<curvedBottomNavigation :options="options"  
+  :value='selected'
+  foreground-color='#42A5F5'
+  badge-color='#FB752D'
+  background-color='#D6FEFF'
+  icon-color='#1E1A1A'
+  
 ></CurvedBottomNavigation> 
  
 
 
 
-<router-view></router-view>
+<router-view @agregar="agregar"></router-view>
 
 </template>
 
@@ -30,6 +31,13 @@ import ArticulosPortada from '@/components/ArticulosPortada.vue'
 import { CurvedBottomNavigation } from "bottom-navigation-vue";
 
 export default {
+  setup(){
+  
+  },
+  mounted(){
+  
+   this.options[1].badge = this.sumacarrito;
+  },
   name: 'App',
   components: {
               Cabecera,
@@ -38,6 +46,7 @@ export default {
            
               },
 data: () => ({
+      sumacarrito:22,
       selected: 1,
       options: [
         {
@@ -46,7 +55,7 @@ data: () => ({
           title: "Home",
           path: {name:'home'},
         },
-        { id: 2, icon: "fas fa-shopping-cart", title: "Wallet", path:{name:'carrito'} },
+        { id: 2, icon: "fas fa-shopping-cart", title: "Carrito", path:{name:'carrito'},badge: 0 },
         {
           id: 3,
           icon: "fas fa-plus",
@@ -58,7 +67,15 @@ data: () => ({
         { id: 5, icon: "fas fa-bell", title: "Notification", badge: 15 },
       ],
     }),
-}
+    methods:{
+      agregar(){
+        this.options[1].badge++;
+        this.selected = 2;
+        
+        }
+      }
+    }
+
 
 </script>
 <style scoped>

@@ -58,8 +58,6 @@ export default {
     if(this.carrito == null){
       this.carrito = [];
     }
-
-
   }
 
   }

@@ -19,7 +19,8 @@
 
 
 
-<router-view @agregar="agregar"></router-view>
+<router-view @contarCarrito="contar" style="margin-top:-15px; margin-bottom: 60px;">
+</router-view>
 
 </template>
 
@@ -34,9 +35,15 @@ export default {
   setup(){
   
   },
+  computed:{
+    // cambiar el badge de la pestaña de carrito segun la cantidad de items
+ 
+
+  },
   mounted(){
   
-   this.options[1].badge = this.sumacarrito;
+  this.contar();
+   
   },
   name: 'App',
   components: {
@@ -46,31 +53,38 @@ export default {
            
               },
 data: () => ({
-      sumacarrito:22,
+     
+      carrito: [],
       selected: 1,
       options: [
         {
           id: 1,
-          icon: "fas fa-home",
-          title: "Home",
+          icon: "fas fa-tags",
+          title: "Artículos",
           path: {name:'home'},
         },
         { id: 2, icon: "fas fa-shopping-cart", title: "Carrito", path:{name:'carrito'},badge: 0 },
         {
           id: 3,
-          icon: "fas fa-plus",
-          title: "Setting",
-          childs: [{ id: 301, icon: "fas fa-ticket-alt", title: "Tickets" },{ id: 301, icon: "fas fa-ticket-alt", title: "Tickets" }],
+          icon: "fas fa-search",
+          title: "Listar",
+          childs: [{ id: 301, icon: "fas fa-tools", title: "Servicio" },{ id: 301, icon: "fas fa-tshirt", title: "Artículo" }],
          
         },
-        { id: 4, icon: "fas fa-bell", title: "Notification", badge: 7 },
-        { id: 5, icon: "fas fa-bell", title: "Notification", badge: 15 },
+        { id: 4, icon: "fas fa-inbox", title: "Mensajes", badge: 7 },
+        
       ],
     }),
     methods:{
-      agregar(){
-        this.options[1].badge++;
-        this.selected = 2;
+      contar(){
+        this.carrito=JSON.parse(localStorage.getItem('carrito'));
+        if(this.carrito == null){
+          this.carrito = [];
+        }
+
+        this.options[1].badge = this.carrito.length;
+       
+        // this.selected = 2;
         
         }
       }

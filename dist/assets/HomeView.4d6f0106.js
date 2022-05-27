@@ -1,1 +1,0 @@
-import{_ as o,r as a,o as t,c as s,b as r,a as c}from"./index.f57311fa.js";const _={},n={class:"cuerpo"},i=c("h1",null,"Pagina Principal",-1);function p(l,d,u,m,f,v){const e=a("articulos-portada");return t(),s("div",n,[i,r(e)])}var x=o(_,[["render",p]]);export{x as default};

@@ -124,8 +124,8 @@ export default {
       if(this.carrito == null){
         this.carrito = [];
       }
-    axios.get('http://localhost/apigranero/api.php?accion=articulos&id=1')
-    // axios.get('mercado.elgranero.net/api.php?accion=articulos&id=1')
+    // axios.get('http://localhost/apigranero/api.php?accion=articulos&id=1')
+    axios.get('https://mercado.elgranero.net/api.php?accion=articulos&id=1')
       .then(response => {
           console.log(response.data);
         this.articulos = response.data.datos;

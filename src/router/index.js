@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/carrito',
       name: 'carrito',
-      component: () => import( '@/views/CarritoView.vue#titulo')
+      component: () => import( '@/views/CarritoView.vue')
 
     },
     {

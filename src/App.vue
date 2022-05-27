@@ -8,18 +8,18 @@
 
 
 <curvedBottomNavigation :options="options"  
-  :value='selected'
   foreground-color='#42A5F5'
   badge-color='#FB752D'
   background-color='#D6FEFF'
   icon-color='#1E1A1A'
-  
+  :value="selected"
+  @click="update"
 ></CurvedBottomNavigation> 
  
 
 
 
-<router-view @contarCarrito="contar" style="margin-top:-15px; margin-bottom: 60px;">
+<router-view @contarCarrito="contar" class="estilosVistas">
 </router-view>
 
 </template>
@@ -53,9 +53,9 @@ export default {
            
               },
 data: () => ({
-     
-      carrito: [],
       selected: 1,
+      carrito: [],
+      
       options: [
         {
           id: 1,
@@ -77,6 +77,7 @@ data: () => ({
     }),
     methods:{
       contar(){
+       
         this.carrito=JSON.parse(localStorage.getItem('carrito'));
         if(this.carrito == null){
           this.carrito = [];
@@ -84,7 +85,7 @@ data: () => ({
 
         this.options[1].badge = this.carrito.length;
        
-        // this.selected = 2;
+        
         
         }
       }
@@ -93,5 +94,9 @@ data: () => ({
 
 </script>
 <style scoped>
-
+.estilosVistas{
+  margin:0 auto;
+  background-color: #42A5F5;
+  min-height: 600px;
+}
 </style>

@@ -1,1 +1,0 @@
-import{_ as s,o,c,a}from"./index.f57311fa.js";const g={emits:{agregar:"agregar"},methods:{agregar(){this.$emit("agregar")}}},n={class:"cuerpo"},i=a("h1",null,"Vista del carro",-1);function _(d,r,l,m,p,e){return o(),c("div",n,[i,a("button",{onClick:r[0]||(r[0]=(...t)=>e.agregar&&e.agregar(...t))},"Agregar")])}var f=s(g,[["render",_]]);export{f as default};

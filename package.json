@@ -7,10 +7,11 @@
     "preview": "vite preview --port 5050"
   },
   "dependencies": {
+    "@chenfengyuan/vue-number-input": "^2.0.1",
     "axios": "^0.27.2",
     "bottom-navigation-vue": "^2.5.0",
     "gitart-vue-dialog": "^2.0.5",
-    "vue": "^3.2.26",
+    "vue": "^3.2.36",
     "vue-flux": "^6.4.0",
     "vue-router": "^4.0.12",
     "vue3-carousel": "^0.1.40"

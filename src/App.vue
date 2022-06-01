@@ -1,11 +1,13 @@
 
  
-<template>
+<template class="container">
+
 
 
 <cabecera></cabecera>
 
-
+<router-view @actualizarBadgeCarrito="contar" class="estilosVistas">
+</router-view>
 
 <curvedBottomNavigation :options="options"  
   foreground-color='#42A5F5'
@@ -13,14 +15,9 @@
   background-color='#D6FEFF'
   icon-color='#1E1A1A'
   :value="selected"
-  @click="update"
+  
 ></CurvedBottomNavigation> 
- 
 
-
-
-<router-view @contarCarrito="contar" class="estilosVistas">
-</router-view>
 
 </template>
 
@@ -28,7 +25,7 @@
 <script>
 
 import Cabecera from '@/components/Cabecera.vue'
-import ArticulosPortada from '@/components/ArticulosPortada.vue'
+
 import { CurvedBottomNavigation } from "bottom-navigation-vue";
 
 export default {
@@ -47,8 +44,7 @@ export default {
   },
   name: 'App',
   components: {
-              Cabecera,
-              ArticulosPortada,
+              Cabecera,              
               CurvedBottomNavigation  
            
               },
@@ -66,9 +62,9 @@ data: () => ({
         { id: 2, icon: "fas fa-shopping-cart", title: "Carrito", path:{name:'carrito'},badge: 0 },
         {
           id: 3,
-          icon: "fas fa-search",
-          title: "Listar",
-          childs: [{ id: 301, icon: "fas fa-tools", title: "Servicio" },{ id: 301, icon: "fas fa-tshirt", title: "Artículo" }],
+          icon: "fas fa-store",
+          title: "Tiendas",
+          childs: [{ id: 301, icon: "fas fa-tools", title: "Servicios" },{ id: 301, icon: "fas fa-tshirt", title: "Ventas",path: {name:'tiendas'} }],
          
         },
         { id: 4, icon: "fas fa-inbox", title: "Mensajes", badge: 7 },
@@ -94,9 +90,17 @@ data: () => ({
 
 </script>
 <style scoped>
+.aplicacion{
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .estilosVistas{
-  margin:0 auto;
-  background-color: #42A5F5;
-  min-height: 600px;
+   
+  
+  
 }
 </style>

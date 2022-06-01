@@ -1,10 +1,8 @@
-
-
 <template>
 
 <div class="container">
 <div class="row">
-<div class="col-md-12">
+<div class="col">
   
 <div class="tarjeta" v-for="articulo in articulos" :key="articulo.id" >
 
@@ -12,7 +10,7 @@
   <div class="fotos">
     <Carousel  :wrap-around="true" :settings="settings" :autoplay=rnd()>
       <Slide v-for="foto in articulo.fotos" :key="foto" >
-        <img class="foto" :src="foto" >
+        <img class="foto" :src="foto ==''?'../src/assets/sin-imagen.jpg':foto" >
       </Slide>
 
       <template #addons>
@@ -44,14 +42,14 @@
 </template>
 
 <script>
-// import 'vue3-carousel/dist/carousel.css';
+import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import axios from 'axios';
 
 export default {
   
   emits: {
-    contarCarrito: 'contarCarrito'
+    actualizarBadgeCarrito: 'actualizarBadgeCarrito'
   },
   
 
@@ -107,7 +105,7 @@ export default {
       //actualizar el carrito localstorage
       localStorage.setItem('carrito', JSON.stringify(this.carrito));
       console.log(localStorage.getItem('carrito'));
-      this.$emit('contarCarrito');
+      this.$emit('actualizarBadgeCarrito');
 
       }
     
@@ -124,21 +122,23 @@ export default {
       if(this.carrito == null){
         this.carrito = [];
       }
-    // axios.get('http://localhost/apigranero/api.php?accion=articulos&id=1')
-    axios.get('https://mercado.elgranero.net/api.php?accion=articulos&id=1')
+    // axios.get('http://localhost/apigranero/api.php?accion=portada')
+    axios.get('https://mercado.elgranero.net/api.php?accion=portada')
       .then(response => {
           console.log(response.data);
         this.articulos = response.data.datos;
       })
       .catch(error => {
         console.log(error);
-      })
+      });
+
   }
 }
 
 </script>
 
 <style>
+
 .fotos{
   width: 200px;
   height: 200px; 
@@ -159,11 +159,16 @@ width: 200px;
   width: 300px;
   margin-top: 20px;
   margin-right: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px #000;
   float: left;
   display: inline-block;
+}
+
+/* seleccionar la ultima tarjeta */
+.tarjeta:last-child{
+  margin-bottom: 80px;
 }
 
 

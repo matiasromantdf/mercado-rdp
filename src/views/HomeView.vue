@@ -1,16 +1,29 @@
 <template>
 
-<div class="container">
-<div class="row">
-<div class="col">
-  
-<div class="tarjeta" v-for="articulo in articulos" :key="articulo.id" >
+  <div class="container">
 
 
-  <div class="fotos">
-    <Carousel  :wrap-around="true" :settings="settings" :autoplay=rnd()>
-      <Slide v-for="foto in articulo.fotos" :key="foto" >
-        <img class="foto" :src="foto ==''?'../src/assets/sin-imagen.jpg':foto" >
+    <loading :active="isLoading" 
+        :can-cancel="false" 
+        :is-full-page="true"
+        :color="'#42A5F5'"
+        :background-color="'#D6FEFF'" 
+              
+        >
+    </loading>
+
+    
+    <div v-for="tienda in tiendas" :key="tienda.id" class="marco" >
+    <p class="nombretienda"> {{tienda.nombre}}</p>
+      <router-link :to="'/tiendas/'+ tienda.id" >
+     <div class="fotos"  @click="moverSelector(tienda.id)">
+     <Carousel  :wrap-around="true" :settings="settings" :autoplay=rnd()>
+    
+      
+      <Slide v-for="articulo in tienda.articulos" :key="articulo" >
+       
+       <img style="width:75%"  :src="articulo.fotos[0] ==''? '../src/assets/sin-imagen.jpg':articulo.fotos[0]" >
+      <div class="nombres"><p>{{articulo.detalle}}</p></div>
       </Slide>
 
       <template #addons>
@@ -20,179 +33,128 @@
 
 
   </div>
+       </router-link>
 
-        
 
-  <div class="card-body"> 
-    
-    <p>{{articulo.detalle}}</p>
-    
-    <p>Precio: {{articulo.precio}}</p>
-    <a :id="articulo.id"  @click="agregarAlCarrito(articulo)"><img :src="ingresado(articulo.id)" > </a>
+    </div>
+
+
+
   </div>
-  
 
-
-</div>
-
-</div>
-</div>
-</div>
-  
+         
+    
 </template>
 
 <script>
-import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import Loading from 'vue3-loading-overlay';
+import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 import axios from 'axios';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import 'vue3-carousel/dist/carousel.css';
 
 export default {
-  
-  emits: {
-    actualizarBadgeCarrito: 'actualizarBadgeCarrito'
+  components: {
+    Loading,
+    Carousel,
+    Slide,  
+    Pagination,
+    Navigation
   },
-  
-
-  name: 'ArticulosPortada',
-  data() {
-    return {
-      settings:{
-        dir:"ltr",
-       // autoplay:3000,
+    data() {
+        return{
+          url: import.meta.env.VITE_APP_URL_API,
+           isLoading: true,
+            tiendas:[],
+            settings:{
+                dir:"ltr",
+            // autoplay:3000,
         
       },
-      articulos: '',
-      carrito: [],
-      fotos: '',  
-    }
-  },
-
-  components: {
-    Carousel,
-    Slide,
-    Pagination,
-    Navigation,
-  },
-
-  methods: {
-    ingresado(idart){
-      if(this.carrito.find(item => item.id == idart)){
-        //inhabilitar el link
-       
-        return './src/assets/en-carrito.png';
-        
-      }else{
-        return './src/assets/al-carrito.png';
-      }
-    
+        }
     },
-
-    agregarAlCarrito(articulo){
-
-      //verificar si exite en el carrito
-      if(this.carrito.find(item => item.id == articulo.id)){
-       alert('ya esta en el carrito');
-      }
-      else{
-        
-      articulo.cantidad = 1;
-
-      //agregar al carrito
-      this.carrito.push(articulo);
-      alert('Se agrego al carrito');
+    components:{
+        Carousel,
+        Slide,
+        Pagination,
+        Navigation,
+        Loading
       
-      
-      //actualizar el carrito localstorage
-      localStorage.setItem('carrito', JSON.stringify(this.carrito));
-      console.log(localStorage.getItem('carrito'));
-      this.$emit('actualizarBadgeCarrito');
-
-      }
-    
     },
-
-    rnd() {
-        return Math.floor(Math.random() * (3300 - 2500) ) + 2800;
-      }
-  },
-  mounted() {
-    
-    //leer el carrito de localstorage
-      this.carrito = JSON.parse(localStorage.getItem('carrito'));
-      if(this.carrito == null){
-        this.carrito = [];
-      }
-    // axios.get('http://localhost/apigranero/api.php?accion=portada')
-    axios.get('https://mercado.elgranero.net/api.php?accion=portada')
+     mounted(){
+       axios.get(this.url+'?accion=tiendas')
       .then(response => {
           console.log(response.data);
-        this.articulos = response.data.datos;
+        this.tiendas = response.data;
+        this.isLoading = false;       
+
       })
       .catch(error => {
         console.log(error);
       });
+    },
+    methods:{
+        rnd(){
+           return Math.floor(Math.random() * (3300 - 2500) ) + 2800;
+        },
+        moverSelector(tiendaId){
+          this.$emit('update',3);
+          localStorage.setItem('tiendaSeleccionada',tiendaId);
+          sessionStorage.setItem('nombreTienda',this.tiendas.find(item => item.id == tiendaId).nombre);
+        }
+    }
 
-  }
+    
 }
-
 </script>
 
 <style>
-
-.fotos{
-  width: 200px;
-  height: 200px; 
-  align-items: center;
-  margin: 0 auto;
-  margin-bottom:60px;
-
-}
-.foto{
-width: 200px;
-
-
-}
-
-.tarjeta{
-  background-color: #FFF;
-  height: 450px;
-  width: 300px;
-  margin-top: 20px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+.marco{
+  
+  
   border-radius: 10px;
-  box-shadow: 0px 0px 10px #000;
-  float: left;
-  display: inline-block;
-}
-
-/* seleccionar la ultima tarjeta */
-.tarjeta:last-child{
-  margin-bottom: 80px;
-}
-
-
-
-
-.carousel__item {
-  min-height: 200px;
-  width: 100%;
-  background-color: var(--vc-clr-primary);
-  color:  var(--vc-clr-white);
-  font-size: 20px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.carousel__slide {
+  margin: 10px;
   padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  max-width: 600px;
+}
+.nombretienda{
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+router-link{
+  text-decoration: none;
+}
+.nombres{
+      
+    display: block;
+    position: absolute;
+    bottom: 0;
+    color:rgb(31, 27, 27);
+    box-shadow: 0px 1px 10px #000;
+  
+    background-color: rgb(65, 62, 62);
+    opacity: 0.5;
+    margin-bottom: 0px;
+
+}
+.nombres > p{
+
+  color:rgb(255, 255, 255);
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  z-index: 1;
+
+}
+.container{
+  
+  padding-top: 20px;
+  padding-bottom: 60px;
 }
 
-.carousel__prev,
-.carousel__next {
-  box-sizing: content-box;
-  border: 5px solid white;
-}
 </style>

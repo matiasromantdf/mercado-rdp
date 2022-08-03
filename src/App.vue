@@ -6,7 +6,7 @@
 
 <cabecera></cabecera>
 
-<router-view @actualizarBadgeCarrito="contar" class="estilosVistas">
+<router-view @actualizarBadgeCarrito="contar" @update ="update" >
 </router-view>
 
 <curvedBottomNavigation :options="options"  
@@ -14,7 +14,8 @@
   badge-color='#FB752D'
   background-color='#D6FEFF'
   icon-color='#1E1A1A'
-  :value="selected"
+  :value = "selected"
+  @update = "update"
   
 ></CurvedBottomNavigation> 
 
@@ -28,9 +29,15 @@ import Cabecera from '@/components/Cabecera.vue'
 
 import { CurvedBottomNavigation } from "bottom-navigation-vue";
 
+
+
 export default {
   setup(){
   
+  },
+  emits: {
+    actualizarBadgeCarrito: 'actualizarBadgeCarrito',
+    
   },
   computed:{
     // cambiar el badge de la pestaña de carrito segun la cantidad de items
@@ -40,38 +47,52 @@ export default {
   mounted(){
   
   this.contar();
+ 
    
   },
   name: 'App',
   components: {
               Cabecera,              
-              CurvedBottomNavigation  
+              CurvedBottomNavigation,
+             
            
               },
 data: () => ({
-      selected: 1,
-      carrito: [],
       
+      carrito: [],
+      selected:1,
       options: [
         {
           id: 1,
-          icon: "fas fa-tags",
-          title: "Artículos",
-          path: {name:'home'},
-        },
-        { id: 2, icon: "fas fa-shopping-cart", title: "Carrito", path:{name:'carrito'},badge: 0 },
-        {
-          id: 3,
           icon: "fas fa-store",
           title: "Tiendas",
-          childs: [{ id: 301, icon: "fas fa-tools", title: "Servicios" },{ id: 301, icon: "fas fa-tshirt", title: "Ventas",path: {name:'tiendas'} }],
+          path: {name:'home'},
+        },
+        { id: 2, icon: "fas fa-shopping-cart", 
+        title: "Carrito", 
+        path:{name:'carrito'},
+        badge: 0,
+        childs: [
+          {id:201, icon:"fas fa-list",title:"Ver",path:{name:'carrito'}},
+          {id:202, icon:"fas fa-check",title:"Enviar",path:{name:'enviar'}},
+          
+          ]},
+        {
+          id: 3,
+          icon: "fas fa-tags",
+          title: "Ver Tienda",
+          path: {name:'tiendas',params:{id:'ultima'}}
+          // childs: [{ id: 301, icon: "fas fa-tools", title: "Servicios" },{ id: 301, icon: "fas fa-tshirt", title: "Ventas",path: {name:'tiendas',params:{id:'ultima'}} }],
          
         },
-        { id: 4, icon: "fas fa-inbox", title: "Mensajes", badge: 7 },
+        { id: 4, icon: "fas fa-search", title: "Buscar", badge: 0, path:{name:'buscar'} },
         
       ],
     }),
     methods:{
+      update(num){        
+        this.selected = num;
+      },
       contar(){
        
         this.carrito=JSON.parse(localStorage.getItem('carrito'));
@@ -90,17 +111,8 @@ data: () => ({
 
 </script>
 <style scoped>
-.aplicacion{
-  width: 100%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.estilosVistas{
-   
-  
+ 
+@media (min-width: 992px) {
   
 }
 </style>

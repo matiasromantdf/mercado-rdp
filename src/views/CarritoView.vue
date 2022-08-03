@@ -5,6 +5,7 @@
       <br>
       <div v-if="carrito.length>0" >
   <h3>Carrito: ${{total}}</h3>
+  <br>
   
   <table class="table" >
     <th scope="col">Articulo</th>

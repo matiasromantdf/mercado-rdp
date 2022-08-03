@@ -17,10 +17,21 @@ const router = createRouter({
       component: () => import( '@/views/HomeView.vue')
     },
     {
-      path: '/tiendas',
+      path: '/tiendas/:id',
       name: 'tiendas',
-      component: () => import( '@/views/TiendasView.vue')
+      component: () => import( '@/views/VerTiendaView.vue')
     },
+    {
+      path: '/enviar',
+      name: 'enviar',
+      component: () => import( '@/views/EnviarPedidoView.vue')
+    },
+    {
+      path:'/buscar',
+      name:'buscar',
+      component: () => import( '@/views/BuscarView.vue')
+    },
+
    
   ]
 })

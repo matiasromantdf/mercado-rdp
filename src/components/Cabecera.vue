@@ -1,8 +1,9 @@
 <template>
-  <div class="jumbotron jumbotron-fluid" id="jumbo">
+  <div  id="jumbo">
+    <img src="../assets/portada.gif" alt="">
   <div class="container">
-    <h1 class="display-4 ">Mercado RDP</h1>
-    <p class="lead">...</p>
+    
+   
   </div>
 </div>
 </template>
@@ -16,8 +17,20 @@ export default {
 
 <style>
 #jumbo{
-  background-color: #D6FEFF;
+ 
   margin-bottom: -16px;
   width: 100%;
+ 
 }
+#jumbo img{
+  width: 100%;
+  height: auto;
+}
+@media screen and (min-width: 800px) {
+  #jumbo{
+    width: 800px;    
+    margin: 0 auto;
+  }
+}
+
 </style>

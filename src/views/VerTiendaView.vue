@@ -20,10 +20,11 @@
     <div class="fotos">
     
       <div v-for="foto in articulo.fotos" :key="foto" >
-        <img class="foto" :src="foto ==''?'../src/assets/sin-imagen.jpg':foto" >
+        <img class="foto" :src="foto ==''?'../src/assets/sin-imagen.jpg':foto" @click="verModal(foto)">
       </div>
 
     </div>  
+
     
   
 
@@ -46,6 +47,24 @@
 </div>
 </div>
  
+ <!--modal para ver la foto ampliada-->
+<div class="modal fade" id="modalFoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+       
+      </div>
+      <div class="modal-body">
+        <img :src="fotomodal" style="width:80%">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" @click="cerrarModal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </template>
 
 <script>
@@ -78,7 +97,8 @@ export default {
       },
       articulos: '',
       carrito: [],
-      fotos: '', 
+      fotos: '',
+      fotomodal: '', 
      
     }
   },
@@ -93,6 +113,14 @@ export default {
   },
 
   methods: {
+    verModal(foto){
+      this.fotomodal = foto;
+      $('#modalFoto').modal('show');
+
+    },
+    cerrarModal(){
+      $('#modalFoto').modal('hide');
+    },
     estaEnCarrito(idart){
       if(this.carrito.find(item => item.id == idart)){
         //inhabilitar el link

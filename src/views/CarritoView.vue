@@ -21,7 +21,7 @@
           <div class="campoNumerico">
               <div class="">
               <div class="contenedor-botones">
-                  <button @click="restar" id="boton-masmenos">-</button>
+                  <button @click="restar(index,item)" id="boton-masmenos">-</button>
                   <input id="texto" type="text" :value="item.cantidad" >
                   <button @click="sumar(index,item)" id="boton-masmenos">+</button>
               </div>
@@ -94,6 +94,14 @@ computed: {
         localStorage.setItem('carrito', JSON.stringify(this.carrito));
         this.$emit('actualizarBadgeCarrito');
       },
+      restar(index,item){
+        if(this.carrito[index].cantidad>1){
+          this.carrito[index].cantidad--;
+          localStorage.setItem('carrito', JSON.stringify(this.carrito));
+          this.$emit('actualizarBadgeCarrito');
+        }
+      },
+      
       
 
     },

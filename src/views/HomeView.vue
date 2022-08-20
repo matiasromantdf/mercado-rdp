@@ -27,7 +27,7 @@
       </Slide>
 
       <template #addons>
-        <Pagination />
+       
       </template>
     </Carousel>
 
@@ -50,7 +50,7 @@
 import Loading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 import axios from 'axios';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 
 export default {
@@ -58,8 +58,8 @@ export default {
     Loading,
     Carousel,
     Slide,  
-    Pagination,
-    Navigation
+    
+    
   },
     data() {
         return{
@@ -68,6 +68,7 @@ export default {
             tiendas:[],
             settings:{
                 dir:"ltr",
+                
             // autoplay:3000,
         
       },
@@ -76,7 +77,7 @@ export default {
     components:{
         Carousel,
         Slide,
-        Pagination,
+        
         Navigation,
         Loading
       

@@ -12,13 +12,11 @@
     <div class="row">
         <div class="col">
         <table class="table">
-            <th>Tienda</th>
-            <th>Articulo</th>
-            <tr v-for="articulo in articulos" :key="articulo">
-                <router-link :to="{name:'tiendas',params:{id:articulo.id}}" @click="enviarNombre(articulo.nombre)">
-                <td>{{articulo.nombre}}</td>
-                </router-link>
+            <th>Articulos encontrados: {{articulos.length>0?articulos.length:'no se encontro!'}}</th>            
+            <tr v-for="articulo in articulos" :key="articulo.id">
+                <router-link :to="{name:'articulo',params:{id:articulo.id}}" >
                 <td>{{articulo.detalle}}</td>
+                </router-link>
             </tr>
         </table>
         </div>
@@ -40,25 +38,41 @@ export default {
             
         }
     },
+    emits:{
+        update:'update'
+    },
     methods:{
-        enviarNombre(nombre){
-            sessionStorage.setItem('nombreTienda',nombre);
-        },
+       
         buscar(){
             axios.get(this.url+'?accion=buscar&texto='+this.texto)
             .then(response => {
                 this.articulos = response.data;
                 console.log(response.data);
+                sessionStorage.setItem('resultado',JSON.stringify(this.articulos));
             })
             .catch(error => {
                 console.log(error);
             })
         }
-    }
+    },
+    mounted(){
+        this.$emit('update',4);
+
+        if(sessionStorage.getItem('resultado')){
+            this.articulos = JSON.parse(sessionStorage.getItem('resultado'))
+
+        }
+
+    },
 
 }
 </script>
 
 <style scoped>
-
+table{
+    border: none;
+}
+td{
+    border: none;
+}
 </style>

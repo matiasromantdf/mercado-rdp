@@ -4,7 +4,9 @@
     <div class="col md-10">
       <br>
       <div v-if="carrito.length>0" >
-  <h3>Carrito: ${{total}}</h3>
+  <h3 style="float:left">Carrito: ${{total}}</h3>
+  <router-link to="/enviar" style="float :left; margin-left: 50px;" class="btn btn-success">Enviar!</router-link>
+  <br>
   <br>
   
   <table class="table" >
@@ -150,10 +152,10 @@ table img{
 }
 
 #texto{
-    width: 40px;   
+    width: 30px;   
     color:rgb(29, 26, 26);
     text-align: center;
-    /* background-color: #42A5F5; */
+    background-color: rgb(215, 215, 216);
 
     border: none;
     pointer-events: none;
@@ -175,11 +177,13 @@ table img{
 .campoNumerico{
     display: flex;
     justify-content: center;
-    width: 110px;
+    width: 100%;
+    min-width:150px;
     height: 100%;
     background-color: #42A5F5;
     border-radius: 50%;
     margin: 0 auto;
 }
+
 
 </style>

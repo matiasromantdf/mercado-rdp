@@ -3,16 +3,15 @@
 <template class="container">
 
 
-
 <cabecera></cabecera>
 
 <router-view @actualizarBadgeCarrito="contar" @update ="update" >
 </router-view>
 
 <curvedBottomNavigation :options="options"  
-  foreground-color='#42A5F5'
-  badge-color='#FB752D'
-  background-color='#D6FEFF'
+  foreground-color='rgb(215, 215, 216)'
+  badge-color='#FB452A'
+  background-color='#FF6D22'
   icon-color='#1E1A1A'
   :value = "selected"
   @update = "update"
@@ -72,11 +71,12 @@ data: () => ({
         title: "Carrito", 
         path:{name:'carrito'},
         badge: 0,
-        childs: [
-          {id:201, icon:"fas fa-list",title:"Ver",path:{name:'carrito'}},
-          {id:202, icon:"fas fa-check",title:"Enviar",path:{name:'enviar'}},
+        // childs: [
+        //   {id:201, icon:"fas fa-list",title:"Ver",path:{name:'carrito'}},
+        //   {id:202, icon:"fas fa-check",title:"Enviar",path:{name:'enviar'}},
           
-          ]},
+        //   ]},
+        },
         {
           id: 3,
           icon: "fas fa-tags",
@@ -110,7 +110,12 @@ data: () => ({
 
 
 </script>
-<style scoped>
+<style >
+#app{
+  background-color: rgb(215, 215, 216);
+  min-height: 900px;
+
+}  
  
 @media (min-width: 992px) {
   

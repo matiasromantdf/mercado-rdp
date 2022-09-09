@@ -1,12 +1,14 @@
 <template>
 
   <div class="container">
-
+    <div class="row">
+      <div class="col">
+        
 
     <loading :active="isLoading" 
         :can-cancel="false" 
         :is-full-page="true"
-        :color="'#42A5F5'"
+        :color="'black'"
         :background-color="'#D6FEFF'" 
               
         >
@@ -14,33 +16,27 @@
 
     
     <div v-for="tienda in tiendas" :key="tienda.id" class="marco" >
-    <p class="nombretienda"> {{tienda.nombre}}</p>
-      <router-link :to="'/tiendas/'+ tienda.id" >
-     <div class="fotos"  @click="moverSelector(tienda.id)">
-     <Carousel  :wrap-around="true" :settings="settings" :autoplay=rnd()>
-    
-      
-      <Slide v-for="articulo in tienda.articulos" :key="articulo" >
-       
-       <img style="width:75%"  :src="articulo.fotos[0] ==''? '../src/assets/sin-imagen.jpg':articulo.fotos[0]" >
-      <div class="nombres"><p>{{articulo.detalle}}</p></div>
-      </Slide>
-
-      <template #addons>
-       
-      </template>
-    </Carousel>
-
-
-  </div>
+        <router-link :to="'/tiendas/'+ tienda.id"  @click="moverSelector(tienda.id)" >
+         <p class="nombretienda"> {{tienda.nombre}}</p>
+          <p class="detalletienda"> {{tienda.resenia}}</p>
+        
+          <div class="carousel" >
+              <Carousel  :wrap-around="true" :settings="settings" :autoplay=rnd() >      
+                  
+                <Slide v-for="articulo in tienda.articulos" :key="articulo">
+            
+                  <img style="width:50%" :src="articulo.fotos[0] ==''? '../src/assets/sin-imagen.jpg':articulo.fotos[0]" >
+                  <div class="detalle"><p>{{articulo.detalle}}</p></div>
+                </Slide>
+            
+              </Carousel>
+          </div>
        </router-link>
-
-
+       
     </div>
-
-
-
-  </div>
+</div>
+</div>
+</div>
 
          
     
@@ -96,7 +92,7 @@ export default {
     },
     methods:{
         rnd(){
-           return Math.floor(Math.random() * (3300 - 2500) ) + 2800;
+           return Math.floor(Math.random() * (5300 - 2500) ) + 3500;
         },
         moverSelector(tiendaId){
           this.$emit('update',3);
@@ -110,24 +106,60 @@ export default {
 </script>
 
 <style>
-.marco{
-  
-  
-  border-radius: 10px;
-  margin: 10px;
-  padding: 10px;
-  width: 100%;
-  border: 1px solid #ccc;
-  max-width: 600px;
-}
 .nombretienda{
-  font-size: 20px;
+  /* background-color: rgb(97, 181, 202);
+  border-left: solid rgb(13, 68, 139) 6px;
+  width:fit-content;
+  padding-left: 15px;
+  padding-right: 75px;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  height: 40px;
+  color:white; */
+  font-size: 60px;
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
+
 }
-router-link{
+.detalletienda{
+  display: flex;
+  flex-direction: column;
+
+  border-left: solid rgb(13, 68, 139) 6px;
+  width:fit-content;
+  padding-left: 15px;
+  padding-right: 75px;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  height: 50px;
+
+}
+.carousel{
+  width:90%;
+  
+  }
+.detalle{
+  float:right;
+  margin-left:20px
+}
+.marco{  
+  
+  margin: 10px;
+  padding: 30px;
+  width: 100%;
+  max-width: 300px;
+  max-width: 600px;
+  float:left;
+  margin-bottom: 100px;
+  /* box-shadow: 0 0 4px 4px white inset; */
+  
+
+}
+
+a{
   text-decoration: none;
+  color: #000;
 }
 .nombres{
       
@@ -136,10 +168,11 @@ router-link{
     bottom: 0;
     color:rgb(31, 27, 27);
     box-shadow: 0px 1px 10px #000;
+    height: 30px;
+    background-color: rgb(19, 18, 18);
   
-    background-color: rgb(65, 62, 62);
     opacity: 0.5;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
 
 }
 .nombres > p{
@@ -148,14 +181,18 @@ router-link{
   font-size: 1.5em;
   font-weight: bold;
   text-align: center;
-  margin-top: 10px;
+  margin-top: -5px;
   z-index: 1;
 
 }
 .container{
   
   padding-top: 20px;
-  padding-bottom: 60px;
+  padding-bottom: 100px;
+  /* background-image: linear-gradient(#5e6dc5, #e45187); */
+  min-height: 600px;
+
+
 }
 
 </style>

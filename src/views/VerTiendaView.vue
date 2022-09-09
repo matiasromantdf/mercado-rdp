@@ -2,68 +2,54 @@
 <loading :active="isLoading" 
         :can-cancel="false" 
         :is-full-page="true"
-        :color="'#42A5F5'"
+        :color="'black'"
         :background-color="'#D6FEFF'"
         
         >
 </loading>
 
 <div class="container">
+  
 <div class="row">
 <div class="col">
 <h1>{{nombreTienda}}</h1>
 
-
 <div class="tarjeta" v-for="articulo in articulos" :key="articulo.id" >
+  <router-link :to="'/articulo/'+articulo.id">
   <div class="lado-izq">
-
+    
+    
     <div class="fotos">
     
-      <div v-for="foto in articulo.fotos" :key="foto" >
+      <!-- <div v-for="foto in articulo.fotos" :key="foto" >
         <img class="foto" :src="foto ==''?'../src/assets/sin-imagen.jpg':foto" @click="verModal(foto)">
+      </div> -->
+      <div>
+        <img class="foto" :src="articulo.fotos[0] ==''?'../src/assets/sin-imagen.jpg':articulo.fotos[0]" >
       </div>
-
-    </div>  
-
-    
-  
+    </div>    
+ 
 
   </div>
 
   <div class="lado-der">
     <div class = "nombre">
       <h4>{{articulo.detalle}}</h4>    
-      <p>Precio: {{articulo.precio}}</p>
+      <!-- <p>Precio: {{articulo.precio}}</p> -->
     </div>
     
+<!--     
     <a :id="articulo.id"  @click="agregarAlCarrito(articulo)"><img :src="estaEnCarrito(articulo.id)" > </a>
-
-  </div>
-
-
+     -->
 </div>
 
+</router-link>
+</div>
+
 </div>
 </div>
 </div>
- 
- <!--modal para ver la foto ampliada-->
-<div class="modal fade" id="modalFoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
-       
-      </div>
-      <div class="modal-body">
-        <img :src="fotomodal" style="width:80%">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" @click="cerrarModal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 </template>
 
@@ -98,7 +84,6 @@ export default {
       articulos: '',
       carrito: [],
       fotos: '',
-      fotomodal: '', 
      
     }
   },
@@ -113,14 +98,7 @@ export default {
   },
 
   methods: {
-    verModal(foto){
-      this.fotomodal = foto;
-      $('#modalFoto').modal('show');
-
-    },
-    cerrarModal(){
-      $('#modalFoto').modal('hide');
-    },
+ 
     estaEnCarrito(idart){
       if(this.carrito.find(item => item.id == idart)){
         //inhabilitar el link
@@ -167,6 +145,7 @@ export default {
       }
   },
   mounted() {
+    this.$emit('update',3);
     
     // console.log(localStorage.getItem('tiendaSeleccionada'));
     //leer el carrito de localstorage
@@ -224,18 +203,17 @@ export default {
 
 <style>
 .tarjeta{
-  background-color: #FFF;
  
-  width: 95%;
+  width: 100%;
   margin-top: 20px;
   margin-right: 10px;
   margin-bottom: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px #000;
+  border-left: none;
   float: left;
   display: inline-block;
   padding-bottom:20px;
   padding-left:10px;
+  border-bottom: solid black;
 }
 .lado-der{
   width: 40%;
@@ -248,7 +226,7 @@ export default {
 }
 
 .foto{
-width: 80px;
+width: 120px;
 float: left;
 margin: 5px;
 
